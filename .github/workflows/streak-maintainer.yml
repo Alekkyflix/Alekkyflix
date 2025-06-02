@@ -1,5 +1,4 @@
-# .github/workflows/smart-streak.yml
-name: Smart Streak
+name: Streak Maintainer
 on:
   schedule:
     - cron: '0 12 * * *'
@@ -18,17 +17,20 @@ jobs:
             exit 0
           fi
 
+          # Ensure git user details are set
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
           # Weekends = lighter activity
           if [ $(date +%u) -gt 5 ]; then
             echo "# Weekend update" >> commits.log
             git add commits.log
-            git config --global user.name "GitHub Actions"
             git commit -m "🌴 Weekend maintenance" --allow-empty
           else
             # Weekdays = normal activity
+            mkdir -p src
             echo "# Work update $(date)" >> src/work.txt
             git add .
-            git config --global user.name "GitHub Actions"
-            git commit -m "💻 Daily work update"
+            git commit -m "💻 Daily work update" --allow-empty
           fi
           git push
