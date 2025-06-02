@@ -8,14 +8,6 @@
 
 # 📊 GitHub Commitment Streak (2025/2026 Goal: 365 Days!)
 
-
-
-# 🕰 Historical Overview
-![3-Year Pattern](https://ghchart.rshah.org/YOUR_USERNAME/333333?years=3&opacity=0.7)
-
-
-
-
 ## 🌐 Socials:
 [![Bluesky](https://img.shields.io/badge/bluesky-0285FF?style=for-the-badge&logo=bluesky&logoColor=%23FFFFFF)](https://bsky.app/profile/Alekkyflix)<br/>
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/yrn.flix).<br/>
