@@ -1,34 +1,23 @@
-# .github/workflows/smart-streak.yml
-name: Smart Streak
+name: Streak maintainer
 on:
   schedule:
-    - cron: '0 12 * * *'
-  workflow_dispatch:
+    - cron: '0 12 * * *'  # Noon UTC daily
+  workflow_dispatch:       # Manual trigger
 
 jobs:
   streak:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Human-like commits
-        run: |
-          # Skip 10% of days randomly
-          if (( $RANDOM % 10 == 0 )); then
-            echo "Skipping today for realism"
-            exit 0
-          fi
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # Critical for pushes
 
-          # Weekends = lighter activity
-          if [ $(date +%u) -gt 5 ]; then
-            echo "# Weekend update" >> commits.log
-            git add commits.log
-            git config --global user.name "GitHub Actions"
-            git commit -m "🌴 Weekend maintenance" --allow-empty
-          else
-            # Weekdays = normal activity
-            echo "# Work update $(date)" >> src/work.txt
-            git add .
-            git config --global user.name "GitHub Actions"
-            git commit -m "💻 Daily work update"
-          fi
+      - name: Update streak file
+        run: |
+          echo "✅ Last run: $(date)" >> streak.md
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add streak.md
+          git commit -m "📅 Daily streak update [skip ci]"
           git push
