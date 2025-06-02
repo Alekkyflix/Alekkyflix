@@ -1,3 +1,16 @@
+<!-- 🌟 LIVE PROFILE HEADER -->
+<div align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=22F725&width=435&lines=Hi%2C+I'm+Flix!;Developer;Daily+Coder;Open-Source+Enthusiast" alt="Typing animation" />
+</div>
+
+# 📊 REAL-TIME CODING ACTIVITY
+<!-- GitHub Readme Activity Graph - updates every hour -->
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Alekkyflix&theme=react-dark&hide_border=true&area=true&custom_title=Flix+Daily+Code+Flow)
+
+
+
+
+
 # 💻 Hi, I'm Flix! 
 ### A passionate developer committed to coding every day! 🚀
 
