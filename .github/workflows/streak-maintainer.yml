@@ -13,16 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1  # Only latest commit needed
+          fetch-depth: 1  # Fetch only latest commit
 
       - name: Configure Git
         run: |
           git config --global user.name "Alekkyflix Bot"
           git config --global user.email "120592887+Alekkyflix@users.noreply.github.com"
 
+      - name: Ensure daily_logs directory exists
+        run: mkdir -p daily_logs  # Create folder if missing
+
       - name: Human-like commits
         run: |
-          # Skip 10% of days randomly
+          # Randomly skip 10% of days for realism
           if (( $RANDOM % 10 == 0 )); then
             echo "🔄 Skipping today for realism $(date)" >> skip_days.log
             git add skip_days.log
@@ -37,12 +40,12 @@ jobs:
             git add weekend_updates.md
             git commit -m "🌴 Weekend touch-up [skip ci]"
           else
-            COMMITS=$(( RANDOM % 3 + 1 ))
+            COMMITS=$(( RANDOM % 3 + 1 ))  # Random 1-3 commits per weekday
             for ((i=1; i<=COMMITS; i++)); do
               echo "📌 Update $i/3 - $(date)" >> daily_logs/$(date +%Y-%m-%d).md
               git add .
-              git commit -m "💼 Day $(date +%A) update $i/$COMMITS"
-              sleep $(( RANDOM % 10 ))
+              git commit -m "💼 Weekday update $i/$COMMITS"
+              sleep $(( RANDOM % 10 ))  # Add randomness between commits
             done
           fi
 
