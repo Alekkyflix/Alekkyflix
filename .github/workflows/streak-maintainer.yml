@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1  # Fetch only latest commit
+          fetch-depth: 1  # Faster execution
 
       - name: Configure Git
         run: |
@@ -21,33 +21,28 @@ jobs:
           git config --global user.email "120592887+Alekkyflix@users.noreply.github.com"
 
       - name: Ensure daily_logs directory exists
-        run: mkdir -p daily_logs  # Create folder if missing
+        run: mkdir -p daily_logs
 
-      - name: Human-like commits
+      - name: Human-like uneven commits
         run: |
-          # Randomly skip 10% of days for realism
-          if (( $RANDOM % 10 == 0 )); then
-            echo "🔄 Skipping today for realism $(date)" >> skip_days.log
+          # Skip 7% of days randomly
+          if (( $RANDOM % 14 == 0 )); then
+            echo "⏭️ Skipping today for realism $(date)" >> skip_days.log
             git add skip_days.log
-            git commit -m "⏭️ Skip day for natural pattern"
+            git commit -m "⏭️ Realistic skip day"
             git push origin $(git branch --show-current)
             exit 0
           fi
 
-          # Weekend logic (Sat/Sun)
-          if [ $(date +%u) -gt 5 ]; then
-            echo "# Light weekend update $(date)" >> weekend_updates.md
-            git add weekend_updates.md
-            git commit -m "🌴 Weekend touch-up [skip ci]"
-          else
-            COMMITS=$(( RANDOM % 3 + 1 ))  # Random 1-3 commits per weekday
-            for ((i=1; i<=COMMITS; i++)); do
-              echo "📌 Update $i/3 - $(date)" >> daily_logs/$(date +%Y-%m-%d).md
-              git add .
-              git commit -m "💼 Weekday update $i/$COMMITS"
-              sleep $(( RANDOM % 10 ))  # Add randomness between commits
-            done
-          fi
+          # Set random commit count (between 5 and 9)
+          COMMITS=$(( RANDOM % 5 + 5 ))
+
+          for ((i=1; i<=COMMITS; i++)); do
+            echo "📌 Update $i/$COMMITS - $(date)" >> daily_logs/$(date +%Y-%m-%d).md
+            git add .
+            git commit -m "💼 Uneven Contribution $i/$COMMITS"
+            sleep $(( RANDOM % 15 ))  # Random delay (0-14 sec)
+          done
 
           # Push changes
           git push origin $(git branch --show-current)
