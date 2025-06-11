@@ -34,8 +34,8 @@ jobs:
             exit 0
           fi
 
-          # Set random commit count (between 20 and 35)
-          COMMITS=$(( RANDOM % 20 + 15 ))
+          # Set random commit count (between 10 and 15)
+          COMMITS=$(( RANDOM % 10 + 5 ))
 
           for ((i=1; i<=COMMITS; i++)); do
             echo "📌 Update $i/$COMMITS - $(date)" >> daily_logs/$(date +%Y-%m-%d).md
