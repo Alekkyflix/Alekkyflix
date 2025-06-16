@@ -2,7 +2,7 @@ name: Streak Maintainer
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Runs daily at 12:00 UTC
+    - cron: '0 12 * * *'  # Daily at 12:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -13,36 +13,43 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1  # Faster execution
+          fetch-depth: 1
 
       - name: Configure Git
         run: |
           git config --global user.name "Alekkyflix Bot"
           git config --global user.email "120592887+Alekkyflix@users.noreply.github.com"
+          git config --global init.defaultBranch main
 
       - name: Ensure daily_logs directory exists
         run: mkdir -p daily_logs
 
-      - name: Human-like uneven commits
+      - name: Human-like uneven commits (contribution-friendly)
         run: |
-          # Skip 7% of days randomly
-          if (( $RANDOM % 14 == 0 )); then
-            echo "⏭️ Skipping today for realism $(date)" >> skip_days.log
+          BRANCH=$(git branch --show-current)
+          FILE="daily_logs/$(date +%Y-%m-%d).md"
+          DATE="$(date)"
+
+          # Random skip for realism (7% chance)
+          if (( RANDOM % 14 == 0 )); then
+            echo "⏭️ Skipped on $DATE for realism" >> skip_days.log
             git add skip_days.log
-            git commit -m "⏭️ Realistic skip day"
-            git push origin $(git branch --show-current)
+            GIT_AUTHOR_DATE="$DATE" GIT_COMMITTER_DATE="$DATE" \
+              git commit -m "⏭️ Realistic skip day"
+            git push origin "$BRANCH"
             exit 0
           fi
 
-          # Set random commit count (between 10 and 15)
+          echo "📅 Daily Log Start - $DATE" > "$FILE"
+
           COMMITS=$(( RANDOM % 10 + 5 ))
 
           for ((i=1; i<=COMMITS; i++)); do
-            echo "📌 Update $i/$COMMITS - $(date)" >> daily_logs/$(date +%Y-%m-%d).md
-            git add .
-            git commit -m "💼 Uneven Contribution $i/$COMMITS"
-            sleep $(( RANDOM % 15 ))  # Random delay (0-14 sec)
+            echo "📌 Entry $i/$COMMITS - $DATE" >> "$FILE"
+            git add "$FILE"
+            GIT_AUTHOR_DATE="$DATE" GIT_COMMITTER_DATE="$DATE" \
+              git commit -m "💼 Uneven Contribution $i/$COMMITS"
+            sleep $(( RANDOM % 15 ))
           done
 
-          # Push changes
-          git push origin $(git branch --show-current)
+          git push origin "$BRANCH"
