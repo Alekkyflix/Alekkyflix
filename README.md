@@ -16,7 +16,7 @@
 
 ## 💻 About Me
 
-Hey! I’m **Flix**, a full-stack developer who loves:
+Hey! I’m **Flix**, a backend developer who loves:
 
 - Building dynamic **React** frontends with create-react-app magic.
 - Crafting robust **Django** APIs and solving backend puzzles.
