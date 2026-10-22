@@ -17,8 +17,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "Alekkyflix Bot"
-          git config --global user.email "120592887+Alekkyflix@users.noreply.github.com"
+          git config --global user.name "Alekkyflix"
+          git config --global user.email "162969369+Alekkyflix@users.noreply.github.com"
           git config --global init.defaultBranch main
 
       - name: Ensure daily_logs directory exists
